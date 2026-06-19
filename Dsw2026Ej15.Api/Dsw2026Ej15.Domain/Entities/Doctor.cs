@@ -6,6 +6,8 @@ namespace Dsw2026Ej15.Domain.Entities
 {
     public class Doctor : BaseEntity
     {
+        public object LicenceNumber;
+
         public string Name { get; set; }
 
         public string LicenseNumber { get; set; }

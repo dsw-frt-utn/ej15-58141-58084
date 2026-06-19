@@ -1,8 +1,9 @@
 
 using Dsw2026Ej15.Domain.Interface;
 using Dsw2026Ej15.Data;
-namespace Dsw2026Ej15.Api
-{
+namespace Dsw2026Ej15.Api;
+using Dsw2026Ej15.Api.Middleware;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -13,6 +14,7 @@ namespace Dsw2026Ej15.Api
 
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHealthChecks();
             builder.Services.AddSingleton<IPersistencia, PersistenceInMemory>();
 
             var app = builder.Build();
@@ -25,11 +27,11 @@ namespace Dsw2026Ej15.Api
             }
 
             app.UseAuthorization();
-
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.MapControllers();
-
+            app.MapHealthChecks("/health-check");
             app.Run();
         }
     }
-}
+
